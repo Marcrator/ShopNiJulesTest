@@ -1,3 +1,7 @@
+// =============== ADMIN =================
+const ADMIN_EMAIL = "admin@gmail.com"; // <-- MUST BE HERE, at the top
+
+
 // =============== DATA ===============
 let users = JSON.parse(localStorage.getItem("users")) || [];
 let reviews = JSON.parse(localStorage.getItem("reviews")) || {};
@@ -9,7 +13,8 @@ let products = [
   { id: 3, name: "Book", price: 500, image: "images/book.jpg" },
   { id: 4, name: "Bag", price: 2000, image: "images/bag.jpg" },
   { id: 5, name: "Watch", price: 5000, image: "images/watch.jpg" },
-  { id: 6, name: "Smart Watch", price: 9000, image: "images/watch.jpg" }
+  { id: 6, name: "Smart Watch", price: 9000, image: "images/smartwatch.jpg" },
+  { id: 7, name: "Monitor", price: 15000, image: "images/monitor.jpg" },
 ];
 
 let currentUser = null;
@@ -26,10 +31,13 @@ window.showShop = showShop;
 window.showDashboard = showDashboard;
 window.showOrders = showOrders;
 window.logout = logout;
+window.showAdmin = showAdmin;
 
-// =============== HEADER UI ===============
+
+// =============== HEADER UI (SHOPEE STYLE) ===============
 function updateHeaderUI() {
   const isLoggedIn = currentUser !== null;
+  const isAdmin = currentUser && currentUser.email === ADMIN_EMAIL;
 
   const ids = [
     "loginBtn",
@@ -37,7 +45,8 @@ function updateHeaderUI() {
     "shopBtn",
     "dashboardBtn",
     "ordersBtn",
-    "logoutBtn"
+    "logoutBtn",
+    "adminBtn"
   ];
 
   ids.forEach(id => {
@@ -46,11 +55,55 @@ function updateHeaderUI() {
 
     if (id === "loginBtn" || id === "registerBtn") {
       el.style.display = isLoggedIn ? "none" : "inline-block";
+    } else if (id === "adminBtn") {
+      el.style.display = isAdmin ? "inline-block" : "none";
     } else {
       el.style.display = isLoggedIn ? "inline-block" : "none";
     }
   });
 }
+// =============== ADMIN ===============
+function showAdmin() {
+  if (!currentUser || currentUser.email !== ADMIN_EMAIL) {
+    return alert("Access denied");
+  }
+
+  mainContent.innerHTML = `
+    <div class="card" style="max-width:500px;margin:auto;">
+      <h2>Admin – Add Product</h2>
+
+      <input id="prodName" placeholder="Product name">
+      <input id="prodPrice" type="number" placeholder="Price">
+      <input id="prodImage" placeholder="Image path (images/xxx.jpg)">
+
+      <button onclick="addProduct()">Add Product</button>
+    </div>
+  `;
+}
+// =============== ADD PRODUCT ===============
+  function addProduct() {
+  const name = document.getElementById("prodName").value.trim();
+  const price = document.getElementById("prodPrice").value;
+  const image = document.getElementById("prodImage").value.trim();
+
+  if (!name || !price || !image) {
+    return alert("Fill all fields");
+  }
+
+  const newProduct = {
+    id: Date.now(),
+    name,
+    price: Number(price),
+    image
+  };
+
+  products.push(newProduct);
+  localStorage.setItem("products", JSON.stringify(products));
+
+  alert("Product added successfully!");
+  showShop();
+}
+
 
 // =============== LOGIN / REGISTER ===============
 function showLogin() {
@@ -115,11 +168,15 @@ function register() {
 
 // =============== LOGOUT ===============
 function logout() {
+  const confirmLogout = confirm("Are you sure you want to log out?");
+  if (!confirmLogout) return;
+
   currentUser = null;
   cart = [];
   updateHeaderUI();
   showLogin();
 }
+
 
 // =============== SHOP ===============
 function showShop() {
@@ -147,9 +204,7 @@ function renderProducts() {
           <h3>${p.name}</h3>
           <p>₱${p.price}</p>
           <button onclick="addToCart(${p.id})">Add to Cart</button>
-          <input id="reviewText-${p.id}" placeholder="Review">
-          <button onclick="addReview(${p.id})">Submit</button>
-          ${(reviews[p.id] || []).map(r => `<p>⭐ ${r.user}: ${r.text}</p>`).join("")}
+          
         </div>
       `;
     });
@@ -257,8 +312,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("dashboardBtn")?.addEventListener("click", showDashboard);
   document.getElementById("ordersBtn")?.addEventListener("click", showOrders);
   document.getElementById("logoutBtn")?.addEventListener("click", logout);
+  document.getElementById("adminBtn")?.addEventListener("click", showAdmin);
+
+
 
   updateHeaderUI();
   showLogin();
 });
+
+
 
