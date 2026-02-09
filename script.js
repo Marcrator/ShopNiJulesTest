@@ -201,24 +201,38 @@ function renderProducts() {
   products
     .filter(p => p.name.toLowerCase().includes(search))
     .forEach(p => {
-      list.innerHTML += `
-        <div class="product-card">
-          <img src="${p.image}">
-          <h3>${p.name}</h3>
-          <p>₱${p.price}</p>
-
-          ${!isAdmin ? `
-            <button onclick="addToCart(${p.id})">Add to Cart</button>
-          ` : `
-            <button onclick="editProduct(${p.id})">Edit</button>
-            <button onclick="deleteProduct(${p.id})" style="background:#d9534f;color:#fff;">
-              Delete
-            </button>
-          `}
-        </div>
+      const div = document.createElement("div");
+      div.className = "product-card";
+      div.innerHTML = `
+        <img src="${p.image}">
+        <h3>${p.name}</h3>
+        <p>₱${p.price}</p>
       `;
+
+      if (isAdmin) {
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+        editBtn.addEventListener("click", () => editProduct(p.id));
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete";
+        delBtn.style.background = "#d9534f";
+        delBtn.style.color = "#fff";
+        delBtn.addEventListener("click", () => deleteProduct(p.id));
+
+        div.appendChild(editBtn);
+        div.appendChild(delBtn);
+      } else {
+        const cartBtn = document.createElement("button");
+        cartBtn.textContent = "Add to Cart";
+        cartBtn.addEventListener("click", () => addToCart(p.id));
+        div.appendChild(cartBtn);
+      }
+
+      list.appendChild(div);
     });
 }
+
 function editProduct(id) {
   const product = products.find(p => p.id === id);
   if (!product) return;
@@ -362,6 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateHeaderUI();
   showLogin();
 });
+
 
 
 
