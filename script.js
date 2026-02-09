@@ -219,6 +219,38 @@ function renderProducts() {
       `;
     });
 }
+function editProduct(id) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+
+  const newName = prompt("Edit product name:", product.name);
+  if (newName === null) return;
+
+  const newPrice = prompt("Edit product price:", product.price);
+  if (newPrice === null) return;
+
+  const newImage = prompt("Edit image path:", product.image);
+  if (newImage === null) return;
+
+  product.name = newName.trim();
+  product.price = Number(newPrice);
+  product.image = newImage.trim();
+
+  localStorage.setItem("products", JSON.stringify(products));
+  alert("Product updated!");
+  renderProducts();
+}
+function deleteProduct(id) {
+  const confirmDelete = confirm("Are you sure you want to delete this product?");
+  if (!confirmDelete) return;
+
+  products = products.filter(p => p.id !== id);
+  localStorage.setItem("products", JSON.stringify(products));
+
+  alert("Product deleted!");
+  renderProducts();
+}
+
 
 
 // =============== CART ===============
@@ -330,6 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateHeaderUI();
   showLogin();
 });
+
 
 
 
