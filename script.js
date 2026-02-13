@@ -19,12 +19,12 @@ let products = [
   { id: 9, name: "Tablet", price: 15000, image: "images/tablet.jpg" },
   { id: 10, name: "Perfume", price: 149, image: "images/perfume.jpg" },
   { id: 11, name: "Pants", price: 800, image: "images/pants.jpg" },
-  { id: 11, name: "Portable Fan", price: 989, image: "images/fan.jpg" },
-  { id: 11, name: "Phone Case", price: 138, image: "images/phonecase.jpg" },
-  { id: 11, name: "Lamp", price: 600, image: "images/lamp.jpg" },
-  { id: 11, name: "Earbuds", price: 1450 image: "images/earbuds.jpg" },
-  { id: 11, name: "Sandals", price: 990, image: "images/sandals.jpg" },
-  { id: 11, name: "Clog", price: 899, image: "images/clog.jpg" },
+  { id: 12, name: "Portable Fan", price: 989, image: "images/fan.jpg" },
+  { id: 13, name: "Phone Case", price: 138, image: "images/phonecase.jpg" },
+  { id: 14, name: "Lamp", price: 600, image: "images/lamp.jpg" },
+  { id: 15, name: "Earbuds", price: 1450 image: "images/earbuds.jpg" },
+  { id: 16, name: "Sandals", price: 990, image: "images/sandals.jpg" },
+  { id: 17, name: "Clog", price: 899, image: "images/clog.jpg" },
 ];
  localStorage.setItem("products", JSON.stringify(products));
 
@@ -396,6 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateHeaderUI();
   showLogin();
 });
+
 
 
 
