@@ -22,7 +22,7 @@ let products = [
   { id: 12, name: "Portable Fan", price: 989, image: "images/fan.jpg" },
   { id: 13, name: "Phone Case", price: 138, image: "images/phonecase.jpg" },
   { id: 14, name: "Lamp", price: 600, image: "images/lamp.jpg" },
-  { id: 15, name: "Earbuds", price: 1450 image: "images/earbuds.jpg" },
+  { id: 15, name: "Earbuds", price: 1450, image: "images/earbuds.jpg" },
   { id: 16, name: "Sandals", price: 990, image: "images/sandals.jpg" },
   { id: 17, name: "Clog", price: 899, image: "images/clog.jpg" },
 ];
@@ -396,6 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateHeaderUI();
   showLogin();
 });
+
 
 
 
