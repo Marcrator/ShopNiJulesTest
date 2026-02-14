@@ -13,7 +13,7 @@ let products = [
   { id: 3, name: "Book", price: 500, image: "images/book.jpg" },
   { id: 4, name: "Bag", price: 1599, image: "images/bag.jpg" },
   { id: 5, name: "Watch", price: 5000, image: "images/watch.jpg" },
-  { id: 6, name: "Smart Watch", price: 9000, image: "images/smartwatch.jpg" },
+  { id: 6, name: "Smart Watch", price: 3000, image: "images/smartwatch.jpg" },
   { id: 7, name: "Monitor", price: 15000, image: "images/Monitor.jpg" },
   { id: 8, name: "Phone", price: 10000, image: "images/phone.jpg" },
   { id: 9, name: "Tablet", price: 15000, image: "images/tablet.jpg" },
@@ -396,6 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateHeaderUI();
   showLogin();
 });
+
 
 
 
